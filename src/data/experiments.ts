@@ -34,19 +34,19 @@ iter = 0;
 while iter < max_iter
     c = (a + b)/2;  % Midpoint
     iter = iter + 1;
-    
+
     % Check if midpoint is the root
     if f(c) == 0
         break;
     end
-    
+
     % Update interval
     if f(a)*f(c) < 0
         b = c;  % Root is in [a, c]
     else
         a = c;  % Root is in [c, b]
     end
-    
+
     % Check for convergence
     if (b - a) < 2*epsilon
         break;
@@ -65,15 +65,15 @@ fprintf('Number of iterations: %d\\n', iter);`,
     image: "https://placehold.co/600x400/111/333?text=Lagrange+Interpolation",
     skills: ["Numerical Methods", "Interpolation", "Lagrange Method"],
     code: `clc; clear; close all;
-t = [0 8 16 24 32 40];  
-O_t = [14.621 11.843 9.870 8.418 7.305 6.413];  
-p_values = [15, 27];  
-n = length(t);  
-O_interp = zeros(size(p_values));  
+t = [0 8 16 24 32 40];
+O_t = [14.621 11.843 9.870 8.418 7.305 6.413];
+p_values = [15, 27];
+n = length(t);
+O_interp = zeros(size(p_values));
 for k = 1:length(p_values)
     p = p_values(k);
     sum = 0;
-    
+
     for i = 1:n
         l = 1;
         for j = 1:n
@@ -83,7 +83,7 @@ for k = 1:length(p_values)
         end
         sum = sum + l * O_t(i);
     end
-    
+
     O_interp(k) = sum;
 end
 disp('Interpolated values:');
@@ -167,6 +167,44 @@ function I = composite_simpson(f, a, b, N)
     sum_val = sum_val + f(a) + f(b);
     I = (h / 3) * sum_val;
 end`,
+  },
+  {
+    id: "10",
+    title: "Experiment 10 (Q2) - Least Squares Fitting",
+    description:
+      "Experiment 10 (Q2): Implementing least squares method for linear and quadratic curve fitting.",
+    image: "https://placehold.co/600x400/111/333?text=Least+Squares+Fit",
+    skills: ["Numerical Methods", "Curve Fitting", "Least Squares"],
+    code: `% Given Data
+x = [-2 -1 0 1 2]';
+y = [15 1 1 3 19]';
+%% Linear Fit: y = a + bx
+X_linear = [ones(size(x)) x];
+coeffs_linear = X_linear \\ y;
+a1 = coeffs_linear(1);
+b1 = coeffs_linear(2);
+fprintf('Linear Fit: y = %.3f + %.3fx\\n', a1, b1);
+%% Quadratic Fit: y = a + bx + cx^2
+X_quad = [ones(size(x)) x x.^2];
+coeffs_quad = X_quad \\ y;
+a2 = coeffs_quad(1);
+b2 = coeffs_quad(2);
+c2 = coeffs_quad(3);
+fprintf('Quadratic Fit: y = %.3f + %.3fx + %.3fx^2\\n', a2, b2, c2);
+%% Optional: Plot for visualization
+x_fit = linspace(min(x), max(x), 100);
+y_linear_fit = a1 + b1 * x_fit;
+y_quad_fit = a2 + b2 * x_fit + c2 * x_fit.^2;
+figure;
+plot(x, y, 'ro', 'MarkerSize', 8, 'DisplayName', 'Data');
+hold on;
+plot(x_fit, y_linear_fit, 'b-', 'DisplayName', 'Linear Fit');
+plot(x_fit, y_quad_fit, 'g--', 'DisplayName', 'Quadratic Fit');
+legend;
+xlabel('x');
+ylabel('f(x)');
+title('Least Squares Fit: Linear and Quadratic');
+grid on;`,
   },
 ];
 export const getExperiments = () => {
