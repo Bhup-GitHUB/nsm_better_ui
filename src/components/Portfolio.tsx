@@ -10,7 +10,7 @@ const Portfolio = () => {
       {/* Header / Intro */}
       <div className="bg-[#111] border border-[#333] rounded-xl p-6 mb-6">
         <h2 className="text-xl font-bold mb-2">
-          Signals & Systems - MATLAB Code Collection
+          NUMERICAL AND STATISTICAL METHODS - MATLAB Code Collection
         </h2>
         <p className="text-gray-300 mb-3">
           This curated collection features MATLAB code examples focused on{" "}
