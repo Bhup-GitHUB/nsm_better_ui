@@ -206,6 +206,51 @@ ylabel('f(x)');
 title('Least Squares Fit: Linear and Quadratic');
 grid on;`,
   },
+  {
+    id: "11",
+    title: "Experiment 11 (Q2) - Correlation and Regression",
+    description:
+      "Experiment 11 (Q2): Karl Pearson correlation coefficient and regression lines (y on x, x on y).",
+    image: "https://placehold.co/600x400/222/444?text=Correlation+Regression",
+    skills: ["Statistics", "Correlation", "Regression Analysis"],
+    code: `x = [-10 -5 0 5 10];
+  y = [5 9 7 11 13];
+  n = length(x);
+  
+  x_bar = mean(x);
+  y_bar = mean(y);
+  
+  numerator = sum((x - x_bar) .* (y - y_bar));
+  denominator = sqrt(sum((x - x_bar).^2) * sum((y - y_bar).^2));
+  r = numerator / denominator;
+  
+  fprintf('Karl Pearson Correlation Coefficient (r): %.4f\\n', r);
+  
+  sigma_x = sqrt(sum((x - x_bar).^2) / n);
+  sigma_y = sqrt(sum((y - y_bar).^2) / n);
+  
+  b_yx = r * (sigma_y / sigma_x);
+  fprintf('Regression line (y on x): y = %.4fx + %.4f\\n', b_yx, y_bar - b_yx * x_bar);
+  
+  b_xy = r * (sigma_x / sigma_y);
+  fprintf('Regression line (x on y): x = %.4fy + %.4f\\n', b_xy, x_bar - b_xy * y_bar);
+  
+  figure;
+  scatter(x, y, 'filled'); hold on;
+  title('Regression Lines and Data Points');
+  xlabel('x'); ylabel('y');
+  grid on;
+  
+  x_vals = linspace(min(x), max(x), 100);
+  y_vals_y_on_x = b_yx * (x_vals - x_bar) + y_bar;
+  plot(x_vals, y_vals_y_on_x, 'r', 'LineWidth', 2, 'DisplayName', 'y on x');
+  
+  y_vals = linspace(min(y), max(y), 100);
+  x_vals_x_on_y = b_xy * (y_vals - y_bar) + x_bar;
+  plot(x_vals_x_on_y, y_vals, 'b--', 'LineWidth', 2, 'DisplayName', 'x on y');
+  
+  legend;`,
+  },
 ];
 export const getExperiments = () => {
   return experiments;
