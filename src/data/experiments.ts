@@ -5,7 +5,7 @@ export type Experiment = {
   image: string;
   skills: string[];
   code: string;
-  output?: string;
+  output?: string; //re
 };
 
 const experiments = [
