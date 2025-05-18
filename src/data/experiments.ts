@@ -11,8 +11,7 @@ export type Experiment = {
 const experiments = [
   {
     id: "1",
-    title:
-      "Experiment 6: Power Method and Lagrange Interpolation (eigenvalues)",
+    title: "Experiment 6: Power Method  (eigenvalues)",
     description: "eigen value using power method experiment 6 q1 and q2 ",
     image: "https://placehold.co/600x400/111/333?text=eignevalues",
     skills: ["eigen value", "Power Method"],
@@ -41,8 +40,7 @@ disp(x_new);
   },
   {
     id: "2",
-    title:
-      "Experiment 6: Power Method and Lagrange Interpolation (eigenvalues) (spring mass)",
+    title: "Experiment 6: Power Method  (eigenvalues) (spring mass)",
     description:
       "eigen value using power method experiment  q2 random x y z values for x0 ",
     image: "https://placehold.co/600x400/111/333?text=eignevalues",
@@ -72,36 +70,94 @@ disp(x_new);
   },
   {
     id: "3",
-    title: "Experiment 7 - Lagrange Interpolation",
-    description:
-      "Experiment 7: Lagrange interpolation method for estimating oxygen saturation at given temperatures.",
+    title: "Experiment 6 - Lagrange Interpolation o(x) and o(y)",
+    description: "lagrange value at o(x) and o(y)",
     image: "https://placehold.co/600x400/111/333?text=Lagrange+Interpolation",
     skills: ["Numerical Methods", "Interpolation", "Lagrange Method"],
-    code: `clc; clear; close all;
-t = [0 8 16 24 32 40];
-O_t = [14.621 11.843 9.870 8.418 7.305 6.413];
-p_values = [15, 27];
+    code: `x = [0 8 16 24 32 40];
+y = [14.621 11.843 9.870 8.418 7.305 6.413];
+p1 = 15;
+n = length(x);
+sum1 = 0;
+for i = 1:n
+    L = 1;
+    for j = 1:n
+        if j ~= i
+            L = L * (p1 - x(j)) / (x(i) - x(j));
+        end
+    end
+    sum1 = sum1 + L * y(i);
+end
+p2 = 27;
+sum2 = 0;
+for i = 1:n
+    L = 1;
+    for j = 1:n
+        if j ~= i
+            L = L * (p2 - x(j)) / (x(i) - x(j));
+        end
+    end
+    sum2 = sum2 + L * y(i);
+end
+fprintf('O(15) ≈ %.4f\n', sum1);
+fprintf('O(27) ≈ %.4f\n', sum2);
+`,
+  },
+  {
+    id: "16",
+    title: "Experiment 6 - Lagrange Interpolation (determine current at t)",
+    description: "lagrange value at o(x) and o(y)",
+    image: "https://placehold.co/600x400/111/333?text=Lagrange+Interpolation",
+    skills: ["Numerical Methods", "Interpolation", "Lagrange Method"],
+    code: `t = [0 0.125 0.25 0.375 0.5];
+i = [0 6.24 7.75 4.85 0.00];
+
+p = 0.23;
 n = length(t);
-O_interp = zeros(size(p_values));
-for k = 1:length(p_values)
-    p = p_values(k);
+sum = 0;
+
+for k = 1:n
+    L = 1;
+    for j = 1:n
+        if j ~= k
+            L = L * (p - t(j)) / (t(k) - t(j));
+        end
+    end
+    sum = sum + L * i(k);
+end
+
+fprintf('Current at t = 0.23 is approximately: %.4f A\n', sum);`,
+  },
+  {
+    id: "18",
+    title: "Experiment 6 - Lagrange Interpolation (voltage drop )",
+    description: "lagrange value at o(x) and o(y)",
+    image: "https://placehold.co/600x400/111/333?text=Lagrange+Interpolation",
+    skills: ["Numerical Methods"],
+    code: `i_vals = [0.25 0.75 1.25 1.5 2.0];
+V_vals = [-0.45 -0.6 0.7 1.88 6.0];
+target = 1.15;
+
+fprintf('Estimating V at i = 1.15:\n');
+
+for order = 1:4
+    x = i_vals(1:order+1);
+    y = V_vals(1:order+1);
+    n = length(x);
     sum = 0;
 
-    for i = 1:n
-        l = 1;
+    for k = 1:n
+        L = 1;
         for j = 1:n
-            if j ~= i
-                l = l * (p - t(j)) / (t(i) - t(j));
+            if j ~= k
+                L = L * (target - x(j)) / (x(k) - x(j));
             end
         end
-        sum = sum + l * O_t(i);
+        sum = sum + L * y(k);
     end
 
-    O_interp(k) = sum;
-end
-disp('Interpolated values:');
-disp(['O(15) = ', num2str(O_interp(1))]);
-disp(['O(27) = ', num2str(O_interp(2))]);`,
+    fprintf('  Order %d polynomial: V(1.15) ≈ %.4f\n', order, sum);
+end`,
   },
   {
     id: "4",
