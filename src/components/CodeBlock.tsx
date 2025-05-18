@@ -25,7 +25,7 @@ const CodeBlock = ({ code, language = "matlab" }: CodeBlockProps) => {
   };
 
   return (
-    <div className="relative bg-[#0a0a0a] rounded-md overflow-hidden mb-4">
+    <div className="relative bg-black rounded-md overflow-hidden mb-4">
       <div className="flex items-center justify-between px-4 py-2 bg-[#1a1a1a] border-b border-[#333]">
         <span className="text-xs font-mono text-gray-400">{language}</span>
         <button
@@ -40,8 +40,8 @@ const CodeBlock = ({ code, language = "matlab" }: CodeBlockProps) => {
           )}
         </button>
       </div>
-      <pre className="p-4 overflow-x-auto">
-        <code className="font-mono text-sm text-gray-300 whitespace-pre-wrap">
+      <pre className="p-4 overflow-x-auto bg-black">
+        <code className="font-mono text-sm text-white whitespace-pre-wrap">
           {code}
         </code>
       </pre>

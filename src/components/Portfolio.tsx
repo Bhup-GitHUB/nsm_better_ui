@@ -14,7 +14,7 @@ const Portfolio = () => {
         </h2>
         <p className="text-gray-300 mb-3">
           This curated collection features MATLAB code examples focused on{" "}
-          <span className="text-white font-medium">Signals and Systems</span>,
+          <span className="text-white font-medium">Numerical and Statistical Methods</span>,
           specifically built for students and enthusiasts from the{" "}
           <span className="text-white font-medium">ECE</span> (Electronics &
           Communication Engineering),{" "}

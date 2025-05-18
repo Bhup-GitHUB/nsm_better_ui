@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import CodeBlock from '../components/CodeBlock';
 import { motion } from 'framer-motion';
 import { getExperimentById } from '../data/experiments';
+import { useToast } from "@/hooks/use-toast";
 
 const Experiment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const experiment = getExperimentById(id);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === "c" && experiment) {
+        e.preventDefault();
+        navigator.clipboard.writeText(experiment.code);
+        toast({ title: "Copied!", description: experiment.title });
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [experiment, toast]);
 
   if (!experiment) {
     return (
