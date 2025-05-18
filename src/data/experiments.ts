@@ -11,51 +11,33 @@ export type Experiment = {
 const experiments = [
   {
     id: "1",
-    title: "Experiment 1 - Bisection Method",
-    description:
-      "Experiment 1: Numerical root finding using the Bisection Method for solving x^3 + 4x^2 - 10 = 0.",
-    image: "https://placehold.co/600x400/111/333?text=Bisection+Method",
-    skills: ["Numerical Methods", "Root Finding", "Bisection Method"],
-    code: `% MATLAB Code for Part 1(ii): Bisection Method for x^3 + 4x^2 - 10 = 0
-clc; clear;
-% Function
-f = @(x) x.^3 + 4*x.^2 - 10;
-% Parameters
-a = 1;              % Left endpoint of interval
-b = 2;              % Right endpoint of interval
-epsilon = 1e-3;     % Tolerance (10^-3)
-max_iter = 100;     % Maximum iterations (safety limit)
-% Check if the interval is valid for bisection
-if f(a)*f(b) >= 0
-    error('Bisection requires f(a) and f(b) with opposite signs.');
-end
-% Bisection Method
-iter = 0;
-while iter < max_iter
-    c = (a + b)/2;  % Midpoint
-    iter = iter + 1;
+    title:
+      "Experiment 6: Power Method and Lagrange Interpolation (eigenvalues)",
+    description: "eigen value using power method experiment 6 q1 and q2 ",
+    image: "https://placehold.co/600x400/111/333?text=eignevalues",
+    skills: ["eigen value", "Power Method"],
+    code: `A = [4 1 0; 1 20 1; 0 1 4];
+x = [1; 1; 1];
+epsilon = 1e-3;
+K_prev = 0;
 
-    % Check if midpoint is the root
-    if f(c) == 0
+while true
+    y = A * x;
+    K = max(abs(y));
+    x_new = y / K;
+
+    if abs(K - K_prev) < epsilon
         break;
     end
 
-    % Update interval
-    if f(a)*f(c) < 0
-        b = c;  % Root is in [a, c]
-    else
-        a = c;  % Root is in [c, b]
-    end
-
-    % Check for convergence
-    if (b - a) < 2*epsilon
-        break;
-    end
+    x = x_new;
+    K_prev = K;
 end
-% Output results
-root = (a + b)/2;  % Final approximation
-fprintf('Approximate root: %.6f\\n', root);
-fprintf('Number of iterations: %d\\n', iter);`,
+
+fprintf('Largest Eigenvalue: %.4f\n', K);
+fprintf('Corresponding Eigenvector:\n');
+disp(x_new);
+`,
   },
   {
     id: "2",
