@@ -16,8 +16,8 @@ const experiments = [
     description: "eigen value using power method experiment 6 q1 and q2 ",
     image: "https://placehold.co/600x400/111/333?text=eignevalues",
     skills: ["eigen value", "Power Method"],
-    code: `A = [4 1 0; 1 20 1; 0 1 4];
-x = [1; 1; 1];
+    code: `A = [4 1 0; 1 20 1; 0 1 4];  
+x = [1; 1; 1];   
 epsilon = 1e-3;
 K_prev = 0;
 
@@ -34,8 +34,8 @@ while true
     K_prev = K;
 end
 
-fprintf('Largest Eigenvalue: %.4f\n', K);
-fprintf('Corresponding Eigenvector:\n');
+fprintf('Largest Eigenvalue: %.4f', K);
+fprintf('  Corresponding Eigenvector: ');
 disp(x_new);
 `,
   },
