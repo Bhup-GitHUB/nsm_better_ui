@@ -41,6 +41,37 @@ disp(x_new);
   },
   {
     id: "2",
+    title:
+      "Experiment 6: Power Method and Lagrange Interpolation (eigenvalues) (spring mass)",
+    description:
+      "eigen value using power method experiment  q2 random x y z values for x0 ",
+    image: "https://placehold.co/600x400/111/333?text=eignevalues",
+    skills: ["eigen value", "Power Method"],
+    code: `A = [-4 2 0; 2 -6 4; 0 8 -16];
+x = [1; 1; 0];
+epsilon = 1e-3;
+K_prev = 0;
+
+while true
+    y = A * x;
+    K = max(abs(y));
+    x_new = y / K;
+
+    if abs(K - K_prev) < epsilon
+        break;
+    end
+
+    x = x_new;
+    K_prev = K;
+end
+
+fprintf('Largest Eigenvalue: %.4f\n', K);
+fprintf('Corresponding Eigenvector:\n');
+disp(x_new);
+`,
+  },
+  {
+    id: "3",
     title: "Experiment 7 - Lagrange Interpolation",
     description:
       "Experiment 7: Lagrange interpolation method for estimating oxygen saturation at given temperatures.",
@@ -73,7 +104,7 @@ disp(['O(15) = ', num2str(O_interp(1))]);
 disp(['O(27) = ', num2str(O_interp(2))]);`,
   },
   {
-    id: "3",
+    id: "4",
     title: "Experiment 8 - Newton's Divided Difference Interpolation",
     description:
       "Experiment 8: Newton's divided difference interpolation method for approximating e^x values.",
@@ -107,7 +138,7 @@ fprintf('Exact e^2.25 = %.4f\\n', exp(2.25));
 fprintf('Error = %.4f\\n', abs(exp(2.25) - Pn));`,
   },
   {
-    id: "4",
+    id: "5",
     title: "Experiment 9 - RMS Current using Trapezoidal and Simpson's Rule",
     description:
       "Experiment 9: Numerical integration methods (Trapezoidal and Simpson's rules) to calculate RMS current value.",
@@ -151,7 +182,7 @@ function I = composite_simpson(f, a, b, N)
 end`,
   },
   {
-    id: "10",
+    id: "6",
     title: "Experiment 10 (Q2) - Least Squares Fitting",
     description:
       "Experiment 10 (Q2): Implementing least squares method for linear and quadratic curve fitting.",
@@ -189,7 +220,7 @@ title('Least Squares Fit: Linear and Quadratic');
 grid on;`,
   },
   {
-    id: "11",
+    id: "12",
     title: "Experiment 11 (Q2) - Correlation and Regression",
     description:
       "Experiment 11 (Q2): Karl Pearson correlation coefficient and regression lines (y on x, x on y).",
