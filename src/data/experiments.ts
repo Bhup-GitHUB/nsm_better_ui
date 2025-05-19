@@ -544,22 +544,25 @@ disp(['Predicted population after 25 years: ', num2str(p_pred)]);`,
     skills: ["Numerical Methods"],
     code: `x = [-2, -1, 0, 1, 2];
 y = [15, 1, 1, 3, 19];
-% Linear and Quadratic Design Matrices
+
+
 X1 = [ones(numel(x),1), x'];
 X2 = [X1, x'.^2];
-% Solve for coefficients
-c1 = (X1'*X1)\(X1'*y');
-c2 = (X2'*X2)\(X2'*y');
-% Display results
+
+
+c1 = X1 \ y';
+c2 = X2 \ y';
 fprintf('Linear: f(x) = %.4f + %.4f*x\n', c1);
 fprintf('Quadratic: f(x) = %.4f + %.4f*x + %.4f*x^2\n', c2);
-% Plot
+
+
 xf = linspace(min(x)-0.5, max(x)+0.5, 100);
 plot(x, y, 'ko', 'MarkerSize', 8, 'LineWidth', 2); hold on;
 plot(xf, c1(1)+c1(2)*xf, 'r-', 'LineWidth', 2);
 plot(xf, c2(1)+c2(2)*xf+c2(3)*xf.^2, 'b--', 'LineWidth', 2);
 legend('Data', 'Linear Fit', 'Quadratic Fit', 'Location', 'northwest');
 xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;
+
 `,
   },
   {
