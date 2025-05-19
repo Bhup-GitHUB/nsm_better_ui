@@ -538,32 +538,27 @@ disp(['Predicted population after 25 years: ', num2str(p_pred)]);`,
   },
   {
     id: "488",
-    title: "Experiment 10 - least square apporximation (linear and quadratic) ",
+    title: "Experiment 10 - least square approximation (linear and quadratic)",
     description: "",
     image: "https://placehold.co/600x400/111/333?text=Interpolation",
     skills: ["Numerical Methods"],
     code: `x = [-2, -1, 0, 1, 2];
 y = [15, 1, 1, 3, 19];
 
-
 X1 = [ones(numel(x),1), x'];
 X2 = [X1, x'.^2];
 
-
-c1 = X1 \ y';
-c2 = X2 \ y';
-fprintf('Linear: f(x) = %.4f + %.4f*x\n', c1);
-fprintf('Quadratic: f(x) = %.4f + %.4f*x + %.4f*x^2\n', c2);
-
+c1 = X1 \\ y';
+c2 = X2 \\ y';
+fprintf('Linear: f(x) = %.4f + %.4f*x\\n', c1);
+fprintf('Quadratic: f(x) = %.4f + %.4f*x + %.4f*x^2\\n', c2);
 
 xf = linspace(min(x)-0.5, max(x)+0.5, 100);
 plot(x, y, 'ko', 'MarkerSize', 8, 'LineWidth', 2); hold on;
 plot(xf, c1(1)+c1(2)*xf, 'r-', 'LineWidth', 2);
 plot(xf, c2(1)+c2(2)*xf+c2(3)*xf.^2, 'b--', 'LineWidth', 2);
 legend('Data', 'Linear Fit', 'Quadratic Fit', 'Location', 'northwest');
-xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;
-
-`,
+xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;`,
   },
   {
     id: "5024",
