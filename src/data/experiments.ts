@@ -589,7 +589,7 @@ grid on; legend('Data', 'Fit');`,
   {
     id: "5024",
     title:
-      "Experiment 10 - least square apporximation (fit a curve of form y=a +bx) ",
+      "Experiment 10 - least square approximation (fit a curve of form y = a + bx)",
     description: "",
     image: "https://placehold.co/600x400/111/333?text=Interpolation",
     skills: ["Numerical Methods"],
@@ -597,20 +597,19 @@ grid on; legend('Data', 'Fit');`,
 y = [27.8, 62.1, 110, 161];
 
 X = [ones(size(x')) x'];
-coeffs = (X' * X) \ (X' * y');
+coeffs = (X' * X) \\ (X' * y');
 a = coeffs(1); b = coeffs(2);
 
 y_fit = a + b * x;
 R2 = 1 - sum((y - y_fit).^2) / sum((y - mean(y)).^2);
 
-fprintf('y = %.4f + %.4fx\nR² = %.4f\n', a, b, R2);
+fprintf('y = %.4f + %.4fx\\nR² = %.4f\\n', a, b, R2);
 
 plot(x, y, 'ko', x, y_fit, 'r-','LineWidth', 2);
 xlabel('x'); ylabel('y'); title('Linear Fit'); grid on;
 legend('Data','Fit','Location','northwest');
-text(2.5, 140, sprintf('y = %.2f + %.2fx\nR² = %.4f', a, b, R2), 'Background', 'w', 'EdgeColor', 'k');
-
-`,
+text(2.5, 140, sprintf('y = %.2f + %.2fx\\nR² = %.4f', a, b, R2), ...
+    'Background', 'w', 'EdgeColor', 'k');`,
   },
 ];
 export const getExperiments = () => {
