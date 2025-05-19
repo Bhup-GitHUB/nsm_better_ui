@@ -587,7 +587,7 @@ xlabel('x'); ylabel('y'); title('Exponential Fit');
 grid on; legend('Data', 'Fit');`,
   },
   {
-    id: "5024",
+    id: "50224",
     title:
       "Experiment 10 - least square approximation (fit a curve of form y = a + bx)",
     description: "",
