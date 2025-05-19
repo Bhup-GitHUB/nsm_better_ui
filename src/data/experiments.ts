@@ -162,7 +162,7 @@ end`,
   {
     id: "20",
     title: "Experiment 7 - Interpolation newtons dividend",
-    description: "lagrange value at o(x) and o(y)",
+    description: "f(x) value findout ",
     image: "https://placehold.co/600x400/111/333?text=Interpolation",
     skills: ["Numerical Methods"],
     code: `x = [1 1.5 2 2.5]; 
@@ -313,7 +313,7 @@ end
 `,
   },
   {
-    id: "32",
+    id: "92",
     title:
       "Experiment 9 - modified Eulers method and Runga-Kutta fourth-order method with step length 0.2 interval 0 to 1",
     description: " equation y = -y + 2cos(t)",
