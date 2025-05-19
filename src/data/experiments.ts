@@ -563,7 +563,7 @@ xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;`,
   {
     id: "5024",
     title:
-      "Experiment 10 - least square apporximation (fit a curve of form y=ae^bx) ",
+      "Experiment 10 - least square approximation (fit a curve of form y = ae^bx)",
     description: "",
     image: "https://placehold.co/600x400/111/333?text=Interpolation",
     skills: ["Numerical Methods"],
@@ -571,7 +571,7 @@ xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;`,
 y = [21, 11, 7, 6, 5, 6];
 logy = log(y);
 X = [ones(length(x),1), x'];
-coeff = X \ logy';
+coeff = X \\ logy';
 a = exp(coeff(1));
 b = coeff(2);
 y_fit = a * exp(b*x);
@@ -583,9 +583,8 @@ plot(x, y, 'ko', 'MarkerSize', 8, 'LineWidth', 2);
 plot(x_fit, a*exp(b*x_fit), 'r-', 'LineWidth', 2);
 text(0.5, 15, sprintf('y = %.2fe^{%.2fx}\\nR² = %.4f', a, b, R2), ...
     'BackgroundColor', 'w', 'EdgeColor', 'k');
-xlabel('x'); ylabel('y'); title('Exponential Fit'); grid on; legend('Data', 'Fit');
-
-`,
+xlabel('x'); ylabel('y'); title('Exponential Fit');
+grid on; legend('Data', 'Fit');`,
   },
   {
     id: "5024",
