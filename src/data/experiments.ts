@@ -63,8 +63,8 @@ while true
     K_prev = K;
 end
 
-fprintf('Largest Eigenvalue: %.4f\n', K);
-fprintf('Corresponding Eigenvector:\n');
+fprintf('Largest Eigenvalue: %.4f\\n', K);
+fprintf('Corresponding Eigenvector:\\n');
 disp(x_new);
 `,
   },
@@ -99,8 +99,8 @@ for i = 1:n
     end
     sum2 = sum2 + L * y(i);
 end
-fprintf('O(15) ≈ %.4f\n', sum1);
-fprintf('O(27) ≈ %.4f\n', sum2);
+fprintf('O(15) ≈ %.4f\\n', sum1);
+fprintf('O(27) ≈ %.4f\\n', sum2);
 `,
   },
   {
@@ -126,7 +126,7 @@ for k = 1:n
     sum = sum + L * i(k);
 end
 
-fprintf('Current at t = 0.23 is approximately: %.4f A\n', sum);`,
+fprintf('Current at t = 0.23 is approximately: %.4f A\\n', sum);`,
   },
   {
     id: "18",
@@ -138,7 +138,7 @@ fprintf('Current at t = 0.23 is approximately: %.4f A\n', sum);`,
 V_vals = [-0.45 -0.6 0.7 1.88 6.0];
 target = 1.15;
 
-fprintf('Estimating V at i = 1.15:\n');
+fprintf('Estimating V at i = 1.15:\\n');
 
 for order = 1:4
     x = i_vals(1:order+1);
@@ -156,169 +156,384 @@ for order = 1:4
         sum = sum + L * y(k);
     end
 
-    fprintf('  Order %d polynomial: V(1.15) ≈ %.4f\n', order, sum);
+    fprintf('  Order %d polynomial: V(1.15) ≈ %.4f\\n', order, sum);
 end`,
   },
   {
-    id: "4",
-    title: "Experiment 8 - Newton's Divided Difference Interpolation",
-    description:
-      "Experiment 8: Newton's divided difference interpolation method for approximating e^x values.",
-    image:
-      "https://placehold.co/600x400/111/333?text=Newton+Divided+Difference",
-    skills: ["Numerical Methods", "Interpolation", "Newton's Method"],
-    code: `clc; clear; close all;
-% Given data points
-x = [1 1.5 2.0 2.5];
-f = [2.7183 4.4817 7.3891 12.1825];
+    id: "20",
+    title: "Experiment 7 - Interpolation newtons dividend",
+    description: "lagrange value at o(x) and o(y)",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `x = [1 1.5 2 2.5]; 
+f = [2.7183 4.4817 7.3891 12.1825]; 
+p = 2.25; 
 n = length(x);
-F = zeros(n,n);
-F(:,1) = f'; % First column is function values
-% Compute divided differences
-for j = 2:n
-    for i = j:n
-        F(i,j) = (F(i,j-1) - F(i-1,j-1)) / (x(i) - x(i-j+1));
+
+F = zeros(n); 
+F(:,1) = f';
+
+for i = 2:n
+    for j = i:n
+        F(j,i) = (F(j,i-1) - F(j-1,i-1)) / (x(j) - x(j-i+1));
     end
 end
-% Interpolation at p = 2.25
-p = 2.25;
-Pn = F(1,1);
-product = 1;
+
+sum = F(1,1);
 for i = 2:n
-    product = product * (p - x(i-1));
-    Pn = Pn + F(i,i) * product;
+    prod = 1;
+    for j = 1:i-1
+        prod = prod * (p - x(j));
+    end
+    sum = sum + F(i,i) * prod;
 end
-% Display result
-fprintf('Estimated f(2.25) = %.4f\\n', Pn);
-fprintf('Exact e^2.25 = %.4f\\n', exp(2.25));
-fprintf('Error = %.4f\\n', abs(exp(2.25) - Pn));`,
+
+fprintf('Interpolated value at x = %.2f is %.5f\\n', p, sum);
+fprintf('Exact value e^x = %.5f\\n', exp(p));
+fprintf('Absolute Error = %.5f\\n', abs(exp(p) - sum));
+`,
   },
   {
-    id: "5",
-    title: "Experiment 9 - RMS Current using Trapezoidal and Simpson's Rule",
-    description:
-      "Experiment 9: Numerical integration methods (Trapezoidal and Simpson's rules) to calculate RMS current value.",
-    image: "https://placehold.co/600x400/111/333?text=Numerical+Integration",
-    skills: [
-      "Numerical Methods",
-      "Integration",
-      "Trapezoidal Rule",
-      "Simpson's Rule",
-    ],
+    id: "22",
+    title: "Experiment 7 - Interpolation newtons dividend(temperature)",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `x = [200 250 300 375 425 475 600];
+f = [7.5 8.6 8.7 10 11.3 12.7 15.3];
+p = 400; %temperature
+n = length(x);
+F = zeros(n, n);
+F(:,1) = f';
+for i = 2:n
+    for j = i:n
+        F(j,i) = (F(j,i-1) - F(j-1,i-1)) / (x(j) - x(j-i+1));
+    end
+end
+sum = F(1,1);
+for i = 2:n
+    prod = 1;
+    for j = 1:i-1
+        prod = prod * (p - x(j));
+    end
+    sum = sum + F(i,i) * prod;
+end
+fprintf('Predicted percent elongation at 400°C = %.4f\\n', sum);
+
+`,
+  },
+  {
+    id: "27",
+    title: "Experiment 8 - RMS VALUE USING TRAPEZOIDAL AND SIMPSONS RULE",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
     code: `clc; clear; close all;
 T = 1;
 N_values = [4, 6, 10, 20];
 i_t = @(t) 5 * exp(-1.25 * t) .* sin(2 * pi * t);
 f_rms = @(t) (i_t(t)).^2;
 a = 0; b = 0.5;
+
+results = [];
 for N = N_values
-    I_rms_trap = composite_trapezoidal(f_rms, a, b, N);
-    I_rms_trap = sqrt((1/T) * I_rms_trap);
-    fprintf('For N = %d, RMS Current (Trapezoidal) = %.6f\\n', N, I_rms_trap);
-    if mod(N,2) == 0
-        I_rms_simp = composite_simpson(f_rms, a, b, N);
-        I_rms_simp = sqrt((1/T) * I_rms_simp);
-        fprintf('For N = %d, RMS Current (Simpson) = %.6f\\n', N, I_rms_simp);
+    I_rms_trap = sqrt((1/T) * composite_trapezoidal(f_rms, a, b, N));
+    results = [results; {N, 'Trapezoidal', I_rms_trap}];
+    
+    if mod(N, 2) == 0
+        I_rms_simp = sqrt((1/T) * composite_simpson(f_rms, a, b, N));
+        results = [results; {N, 'Simpson', I_rms_simp}];
     end
-    fprintf('\\n');
 end
+
+% Display results as a table
+disp(cell2table(results, 'VariableNames', {'N', 'Method', 'RMS_Current'}));
+
+% Integration methods
 function I = composite_trapezoidal(f, a, b, N)
-    h = (b - a) / N;
-    x = a + h * (1:N-1);
-    sum_val = sum(2 * f(x));
-    sum_val = sum_val + f(a) + f(b);
-    I = (h / 2) * sum_val;
+    x = a + (b - a) * (1:N-1) / N;
+    I = (b - a) / (2 * N) * (f(a) + f(b) + 2 * sum(f(x)));
 end
+
 function I = composite_simpson(f, a, b, N)
+    x = a + (b - a) * (1:N-1) / N;
+    I = (b - a) / (3 * N) * (f(a) + f(b) + 4 * sum(f(x(1:2:end))) + 2 * sum(f(x(2:2:end-1))));
+end
+
+`,
+  },
+  {
+    id: "32",
+    title: "Experiment 8 - composite_trapezoidal and simpsons rule",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `f = @(x) cos(x).^2;
+a = -0.25;
+b = 0.25;
+subintervals = [4, 6, 10, 20];
+fprintf('Integral of (cos x)^2 from %g to %g:\\n\\n', a, b);
+fprintf('%5s %15s %15s\\n', 'n', 'Trap', 'Simp');
+fprintf('%s\\n', repmat('-', 1, 40));
+for N = subintervals
+    trap_result = trapezoidal_rule(f, a, b, N);
+    simp_result = simpson_rule(f, a, b, N);
+    fprintf('%5d %15.10f %15.10f\\n', N, trap_result, simp_result);
+end
+exact_integral = @(x) x/2 + sin(2*x)/4;
+exact = exact_integral(b) - exact_integral(a);
+fprintf('\\nExact value: %.10f\\n', exact);
+function ans = trapezoidal_rule(f, a, b, N)
     h = (b - a) / N;
-    x = a + h * (1:N-1);
-    sum_val = sum(4 * f(x(1:2:end))) + sum(2 * f(x(2:2:end-1)));
-    sum_val = sum_val + f(a) + f(b);
-    I = (h / 3) * sum_val;
-end`,
+    sum_val = f(a) + f(b);
+    for i = 1:N-1
+        x = a + h * i;
+        sum_val = sum_val + 2 * f(x);
+    end
+    ans = sum_val * (h / 2);
+end
+function ans = simpson_rule(f, a, b, N)
+    if mod(N, 2) ~= 0
+        N = N + 1;
+        fprintf('N must be even. Using N = %d instead.\\n', N);
+    end
+    h = (b - a) / N;
+    sum_val = f(a) + f(b);
+    for i = 1:N-1
+        x = a + h * i;
+        if mod(i, 2) == 0
+            sum_val = sum_val + 2 * f(x);
+        else
+            sum_val = sum_val + 4 * f(x);
+        end
+    end
+    ans = sum_val * (h / 3);
+end
+
+`,
   },
   {
-    id: "6",
-    title: "Experiment 10 (Q2) - Least Squares Fitting",
-    description:
-      "Experiment 10 (Q2): Implementing least squares method for linear and quadratic curve fitting.",
-    image: "https://placehold.co/600x400/111/333?text=Least+Squares+Fit",
-    skills: ["Numerical Methods", "Curve Fitting", "Least Squares"],
-    code: `% Given Data
-x = [-2 -1 0 1 2]';
-y = [15 1 1 3 19]';
-%% Linear Fit: y = a + bx
-X_linear = [ones(size(x)) x];
-coeffs_linear = X_linear \\ y;
-a1 = coeffs_linear(1);
-b1 = coeffs_linear(2);
-fprintf('Linear Fit: y = %.3f + %.3fx\\n', a1, b1);
-%% Quadratic Fit: y = a + bx + cx^2
-X_quad = [ones(size(x)) x x.^2];
-coeffs_quad = X_quad \\ y;
-a2 = coeffs_quad(1);
-b2 = coeffs_quad(2);
-c2 = coeffs_quad(3);
-fprintf('Quadratic Fit: y = %.3f + %.3fx + %.3fx^2\\n', a2, b2, c2);
-%% Optional: Plot for visualization
-x_fit = linspace(min(x), max(x), 100);
-y_linear_fit = a1 + b1 * x_fit;
-y_quad_fit = a2 + b2 * x_fit + c2 * x_fit.^2;
+    id: "32",
+    title:
+      "Experiment 9 - modified Eulers method and Runga-Kutta fourth-order method with step length 0.2 interval 0 to 1",
+    description: " equation y = -y + 2cos(t)",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `clc; clear;
+f = @(t, y) -y + 2*cos(t);
+a = 0; b = 1; h = 0.2;
+n = (b - a)/h;
+t = a:h:b;
+y1 = zeros(1, n+1);
+y2 = zeros(1, n+1);
+y1(1) = 1;
+y2(1) = 1;
+for i = 1:n
+    k1 = f(t(i), y1(i));
+    y_pred = y1(i) + h * k1;
+    k2 = f(t(i+1), y_pred);
+    y1(i+1) = y1(i) + (h/2)*(k1 + k2);
+end
+for i = 1:n
+    k1 = h * f(t(i), y2(i));
+    k2 = h * f(t(i) + h/2, y2(i) + k1/2);
+    k3 = h * f(t(i) + h/2, y2(i) + k2/2);
+    k4 = h * f(t(i) + h, y2(i) + k3);
+    y2(i+1) = y2(i) + (1/6)*(k1 + 2*k2 + 2*k3 + k4);
+end
+fprintf('  t        Modified Euler     Runge-Kutta 4\\n');
+disp([t' y1' y2'])
+plot(t, y1, 'ro--', t, y2, 'bs-');
+legend('Modified Euler','RK4');
+xlabel('t'); ylabel('y');
+title('Solution of dy/dt = -y + 2cos(t)');
+grid on;
+`,
+  },
+  {
+    id: "33",
+    title:
+      "Experiment 9 - modified Eulers method and Runga-Kutta fourth-order method with step length 0.2 interval 0 to 1",
+    description: " equation y = sqrt(2 + y)",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `clc; clear;
+
+% Given parameters
+f = @(t, y) sqrt(2 + y);   % Function
+a = 0; b = 1; h = 0.2;
+n = (b - a)/h;
+t = a:h:b;
+y1 = zeros(1, n+1);
+y2 = zeros(1, n+1);
+y1(1) = 0.8;  % Initial condition for Modified Euler
+y2(1) = 0.8;  % Initial condition for RK4
+
+% Modified Euler's Method
+for i = 1:n
+    k1 = f(t(i), y1(i));
+    y_pred = y1(i) + h * k1;
+    k2 = f(t(i+1), y_pred);
+    y1(i+1) = y1(i) + (h/2)*(k1 + k2);
+end
+
+% Runge-Kutta 4th Order Method
+for i = 1:n
+    k1 = h * f(t(i), y2(i));
+    k2 = h * f(t(i) + h/2, y2(i) + k1/2);
+    k3 = h * f(t(i) + h/2, y2(i) + k2/2);
+    k4 = h * f(t(i) + h, y2(i) + k3);
+    y2(i+1) = y2(i) + (1/6)*(k1 + 2*k2 + 2*k3 + k4);
+end
+
+% Output
+fprintf('  t        Modified Euler     Runge-Kutta 4\\n');
+disp([t' y1' y2'])
+
+% Plot
+plot(t, y1, 'ro--', t, y2, 'bs-');
+legend('Modified Euler','RK4');
+xlabel('t'); ylabel('y');
+title('Solution of dy/dt = sqrt(2 + y)');
+grid on;
+
+`,
+  },
+  {
+    id: "35",
+    title:
+      "Experiment 9 - modified Eulers method and Runga-Kutta fourth-order (RL CIRCUIT)1",
+    description: "krichoff rl circuit",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `clc;
+clear;
+% Parameters
+L = 1;
+R = 1.5;
+h = 0.05;
+t0 = 0;
+t_end = 1;
+i0 = 0.5;
+% Differential equation: di/dt = -R/L * i
+f = @(t, i) -(R/L) * i;
+% Time vector
+t = t0:h:t_end;
+n = length(t);
+% Initialize solution arrays
+i_exact = zeros(1, n);
+i_mod_euler = zeros(1, n);
+i_rk4 = zeros(1, n);
+% Initial values
+i_mod_euler(1) = i0;
+i_rk4(1) = i0;
+i_exact(1) = i0;
+% Analytical solution
+i_exact = i0 * exp(-(R/L) * t);
+% Modified Euler Method
+for j = 1:n-1
+    k1 = f(t(j), i_mod_euler(j));
+    predictor = i_mod_euler(j) + h * k1;
+    k2 = f(t(j+1), predictor);
+    i_mod_euler(j+1) = i_mod_euler(j) + (h/2) * (k1 + k2);
+end
+% Runge-Kutta 4th Order Method
+for j = 1:n-1
+    K1 = h * f(t(j), i_rk4(j));
+    K2 = h * f(t(j) + h/2, i_rk4(j) + K1/2);
+    K3 = h * f(t(j) + h/2, i_rk4(j) + K2/2);
+    K4 = h * f(t(j) + h, i_rk4(j) + K3);
+    i_rk4(j+1) = i_rk4(j) + (1/6) * (K1 + 2*K2 + 2*K3 + K4);
+end
+% Display results in table
+T = table(t', i_exact', i_mod_euler', i_rk4', ...
+    'VariableNames', {'Time', 'Exact', 'Modified_Euler', 'Runge_Kutta_4'});
+disp(T);
+% Plotting
 figure;
-plot(x, y, 'ro', 'MarkerSize', 8, 'DisplayName', 'Data');
-hold on;
-plot(x_fit, y_linear_fit, 'b-', 'DisplayName', 'Linear Fit');
-plot(x_fit, y_quad_fit, 'g--', 'DisplayName', 'Quadratic Fit');
-legend;
-xlabel('x');
-ylabel('f(x)');
-title('Least Squares Fit: Linear and Quadratic');
-grid on;`,
+plot(t, i_exact, 'k-', 'LineWidth', 2); hold on;
+plot(t, i_mod_euler, 'bo--', 'LineWidth', 1.2);
+plot(t, i_rk4, 'rs--', 'LineWidth', 1.2);
+legend('Exact', 'Modified Euler', 'Runge-Kutta 4');
+xlabel('Time (t)');
+ylabel('Current i(t)');
+title('RL Circuit: i''(t) = -1.5*i(t)');
+grid on;
+`,
   },
   {
-    id: "12",
-    title: "Experiment 11 (Q2) - Correlation and Regression",
-    description:
-      "Experiment 11 (Q2): Karl Pearson correlation coefficient and regression lines (y on x, x on y).",
-    image: "https://placehold.co/600x400/222/444?text=Correlation+Regression",
-    skills: ["Statistics", "Correlation", "Regression Analysis"],
-    code: `x = [-10 -5 0 5 10];
-  y = [5 9 7 11 13];
-  n = length(x);
-  
-  x_bar = mean(x);
-  y_bar = mean(y);
-  
-  numerator = sum((x - x_bar) .* (y - y_bar));
-  denominator = sqrt(sum((x - x_bar).^2) * sum((y - y_bar).^2));
-  r = numerator / denominator;
-  
-  fprintf('Karl Pearson Correlation Coefficient (r): %.4f\\n', r);
-  
-  sigma_x = sqrt(sum((x - x_bar).^2) / n);
-  sigma_y = sqrt(sum((y - y_bar).^2) / n);
-  
-  b_yx = r * (sigma_y / sigma_x);
-  fprintf('Regression line (y on x): y = %.4fx + %.4f\\n', b_yx, y_bar - b_yx * x_bar);
-  
-  b_xy = r * (sigma_x / sigma_y);
-  fprintf('Regression line (x on y): x = %.4fy + %.4f\\n', b_xy, x_bar - b_xy * y_bar);
-  
-  figure;
-  scatter(x, y, 'filled'); hold on;
-  title('Regression Lines and Data Points');
-  xlabel('x'); ylabel('y');
-  grid on;
-  
-  x_vals = linspace(min(x), max(x), 100);
-  y_vals_y_on_x = b_yx * (x_vals - x_bar) + y_bar;
-  plot(x_vals, y_vals_y_on_x, 'r', 'LineWidth', 2, 'DisplayName', 'y on x');
-  
-  y_vals = linspace(min(y), max(y), 100);
-  x_vals_x_on_y = b_xy * (y_vals - y_bar) + x_bar;
-  plot(x_vals_x_on_y, y_vals, 'b--', 'LineWidth', 2, 'DisplayName', 'x on y');
-  
-  legend;`,
+    id: "315",
+    title:
+      "Experiment 11 Corelation coefficient and regression line(correlation coefficient)",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `% Data
+x = [-10, -5, 0, 5, 10];
+y = [5, 9, 7, 11, 13];
+
+% Calculate correlation coefficient
+corr_matrix = corrcoef(x, y);
+r = corr_matrix(1, 2);
+
+% Display result
+disp(['Correlation Coefficient: ', num2str(r)]);
+
+% without inbuilt function
+
+% Given data
+%x = [-10, -5, 0, 5, 10];
+%y = [5, 9, 7, 11, 13];
+%n = length(x);
+%sum_x = sum(x);
+%sum_y = sum(y);
+%sum_xy = sum(x .* y);
+%sum_x2 = sum(x.^2);
+%sum_y2 = sum(y.^2);
+%numerator = n * sum_xy - sum_x * sum_y;
+%denominator = sqrt((n * sum_x2 - sum_x^2) * (n * sum_y2 - sum_y^2));
+%r = numerator / denominator;
+%disp(['Correlation Coefficient (Manual Calculation): ', num2str(r)]);
+`,
+  },
+  {
+    id: "316",
+    title:
+      "Experiment 11 Corelation coefficient and regression line(two regression lines)",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `% Data
+x = 1:10;
+y = [10, 12, 16, 28, 25, 36, 41, 49, 40, 50];
+coeff_y_on_x = polyfit(x, y, 1);
+b = coeff_y_on_x(1); % Slope
+a = coeff_y_on_x(2); % Intercept
+disp(['Regression line y on x: y = ', num2str(b), 'x + ', num2str(a)]);
+coeff_x_on_y = polyfit(y, x, 1);
+d = coeff_x_on_y(1); % Slope
+c = coeff_x_on_y(2); % Intercept
+disp(['Regression line x on y: x = ', num2str(d), 'y + ', num2str(c)]);`,
+  },
+  {
+    id: "319",
+    title: "Experiment 11 Corelation coefficient and regression line() ",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `% Data
+t = [0, 5, 10, 15, 20];
+p = [100, 200, 450, 950, 2000];
+log_p = log(p);
+
+coeff = polyfit(t, log_p, 1);
+k = coeff(1); % Slope (growth rate)
+ln_p0 = coeff(2); % Intercept (ln(initial population))
+% Predict population at t = 25 (20 + 5 years)
+t_pred = 25;
+p_pred = exp(ln_p0 + k * t_pred);
+% Display result
+disp(['Predicted population after 25 years: ', num2str(p_pred)]);`,
   },
 ];
 export const getExperiments = () => {
