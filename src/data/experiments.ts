@@ -517,7 +517,8 @@ disp(['Regression line x on y: x = ', num2str(d), 'y + ', num2str(c)]);`,
   },
   {
     id: "319",
-    title: "Experiment 11 Corelation coefficient and regression line() ",
+    title:
+      "Experiment 11 Corelation coefficient and regression line(predict years)",
     description: "",
     image: "https://placehold.co/600x400/111/333?text=Interpolation",
     skills: ["Numerical Methods"],
@@ -534,6 +535,59 @@ t_pred = 25;
 p_pred = exp(ln_p0 + k * t_pred);
 % Display result
 disp(['Predicted population after 25 years: ', num2str(p_pred)]);`,
+  },
+  {
+    id: "488",
+    title: "Experiment 10 - least square apporximation (linear and quadratic) ",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `x = [-2, -1, 0, 1, 2];
+y = [15, 1, 1, 3, 19];
+% Linear and Quadratic Design Matrices
+X1 = [ones(numel(x),1), x'];
+X2 = [X1, x'.^2];
+% Solve for coefficients
+c1 = (X1'*X1)\(X1'*y');
+c2 = (X2'*X2)\(X2'*y');
+% Display results
+fprintf('Linear: f(x) = %.4f + %.4f*x\n', c1);
+fprintf('Quadratic: f(x) = %.4f + %.4f*x + %.4f*x^2\n', c2);
+% Plot
+xf = linspace(min(x)-0.5, max(x)+0.5, 100);
+plot(x, y, 'ko', 'MarkerSize', 8, 'LineWidth', 2); hold on;
+plot(xf, c1(1)+c1(2)*xf, 'r-', 'LineWidth', 2);
+plot(xf, c2(1)+c2(2)*xf+c2(3)*xf.^2, 'b--', 'LineWidth', 2);
+legend('Data', 'Linear Fit', 'Quadratic Fit', 'Location', 'northwest');
+xlabel('x'); ylabel('f(x)'); title('Least Squares Fitting'); grid on;
+`,
+  },
+  {
+    id: "5024",
+    title:
+      "Experiment 10 - least square apporximation (fit a curve of form y=ae^bx) ",
+    description: "",
+    image: "https://placehold.co/600x400/111/333?text=Interpolation",
+    skills: ["Numerical Methods"],
+    code: `x = [0.1, 0.2, 0.4, 0.5, 1, 2];
+y = [21, 11, 7, 6, 5, 6];
+logy = log(y);
+X = [ones(length(x),1), x'];
+coeff = X \ logy';
+a = exp(coeff(1));
+b = coeff(2);
+y_fit = a * exp(b*x);
+R2 = 1 - sum((y - y_fit).^2) / sum((y - mean(y)).^2);
+fprintf('y = %.4f * exp(%.4f * x)\\nR² = %.4f\\n', a, b, R2);
+x_fit = linspace(min(x), max(x), 100);
+figure; hold on;
+plot(x, y, 'ko', 'MarkerSize', 8, 'LineWidth', 2);
+plot(x_fit, a*exp(b*x_fit), 'r-', 'LineWidth', 2);
+text(0.5, 15, sprintf('y = %.2fe^{%.2fx}\\nR² = %.4f', a, b, R2), ...
+    'BackgroundColor', 'w', 'EdgeColor', 'k');
+xlabel('x'); ylabel('y'); title('Exponential Fit'); grid on; legend('Data', 'Fit');
+
+`,
   },
 ];
 export const getExperiments = () => {
