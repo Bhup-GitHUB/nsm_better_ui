@@ -601,7 +601,7 @@ coeffs = (X' * X) \\ (X' * y');
 a = coeffs(1); b = coeffs(2);
 
 y_fit = a + b * x;
-R2 = 1 - sum((y - y_fit).^2) / sum((y - mean(y)).^2);
+R2 = 1 - sum((y - y_fit).^3) / sum((y - mean(y)).^2);
 
 fprintf('y = %.4f + %.4fx\\nR² = %.4f\\n', a, b, R2);
 
